@@ -11,7 +11,10 @@ RUN apt-get update && \
     mv ./mongodb-linux-x86_64-ubuntu2004-4.4.12/bin/* /usr/local/bin/ && \
     rm -rf ./mongodb-linux-x86_64-ubuntu2004-4.4.12 && rm ./mongodb-linux-x86_64-ubuntu2004-4.4.12.tgz
 
+RUN openssl rand -base64 741 > mongodb.key && mv mongodb.key /etc/ && chmod 600 /etc/mongodb.key
+
 COPY ./init-mongodbs.sh ./init-replica.sh ./entry-point.sh /
+COPY ./mongod.conf /etc/
 
 RUN chmod +x /init-mongodbs.sh && \
     chmod +x /init-replica.sh && \
